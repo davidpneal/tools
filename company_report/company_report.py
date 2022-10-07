@@ -2,7 +2,7 @@
 
 import requests
 import yaml
-from secrets import alphavantage_api_key
+from secret import alphavantage_api_key
 #import alpha_vantage
 
 
@@ -29,27 +29,33 @@ class report:
             exit(1)
 
 
-    def write_yaml(self):
+    def write_snapshot_yaml(self):
         pass
-        # write the data to tickers.yaml
-    
+        # write the data to tickers_snapshot_YYYYMMDD.yaml
+
     
     def update(self):
         pass
         # Calls API and requests the following data:   #### Is this a separate class?
-            # Company Name (if needed)
-            # Current Stock Price (last close)
-            # Price from 1 month ago (do look this up each time)
-            # 52 week high
-            # 52 week low
-            # latest earnings result, with date
-            # Might need a time series for the past 3 months - genrate the graph with this data
+            # Fields to map ~ lookup:
+            # company_name: (if None)
+            # price_last_close: 
+            # price_1mo_ago:
+            # price_52wk_high:
+            # price_52wk_low:
+            # last_earnings:
+            # last_earnings_date:
 
-        # Data is written to tickers dict
+            # report_last_run:
+            # Might need a time series for the past 3 months - generate the graph with this data
+
+
+        # Data is written to tickers dict - need to add the key/pair for most itemss
         # Set the report_last_run var to current timedate
 
         # Need logic to catch if the lookups failed
         # Also need some rate limiting since API is restricted to 5 calls/min
+        # Might not need separate calls for all of the above items, the API returns collections of data
 
 
     def generate_docx(self):
@@ -66,5 +72,5 @@ if __name__ == '__main__':
 
     cr.update()
     cr.generate_docx()
-    cr.write_yaml()
+    cr.write_snapshot_yaml()
 

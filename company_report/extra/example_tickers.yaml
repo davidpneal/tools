@@ -1,42 +1,24 @@
 ---
 # Information about the portfolio
-# Later on, might move SSG data into a separate ssg_data.yaml file
 
 AAPL:
-  # manually updated:
+  company_name: 'Apple'
   member_name: 'David Neal'
   cost_basis:
   ssg_date:
   ssg_buy:
   ssg_hold:
   ssg_sell:
-  # automatically updated:
-  company_name:
-  price_last_close:
-  price_1mo_ago:
-  price_52wk_high:
-  price_52wk_low:
-  last_earnings:
-  last_earnings_date:
-  report_last_run:
 
 MSFT:
-  # manually updated:
+  company_name: 'Microsoft'
   member_name: 'David Neal'
   cost_basis:
   ssg_date:
   ssg_buy:
   ssg_hold:
   ssg_sell:
-  # automatically updated:
-  company_name:
-  price_last_close:
-  price_1mo_ago:
-  price_52wk_high:
-  price_52wk_low:
-  last_earnings:
-  last_earnings_date:
-  report_last_run:
+
 
 
 
