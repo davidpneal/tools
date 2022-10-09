@@ -13,10 +13,14 @@ class report:
         self.read_yaml()
 
 
-    # def __str__(self):
-        # Decide - is this the correct method to print the data to screeen?
-        # output = loop over and show data in _tickers
-        # return(output)
+    def __str__(self):
+        output = ""
+        for ticker in self._tickers.keys():
+            output += ticker + '\n'
+            for key in self._tickers[ticker]:
+                output += key + ': ' + str(self._tickers[ticker][key]) + '\n'
+            output += '\n'
+        return(output)
 
 
     def read_yaml(self):
@@ -35,9 +39,13 @@ class report:
 
     
     def update(self):
-        pass
-        # Calls API and requests the following data:   #### Is this a separate class?
-            # Fields to map ~ lookup:
+        # Calls API and requests the following data
+        # Need logic to catch if the lookups failed
+
+        # Loop through the tickers and add additional data
+        for ticker in self._tickers.keys():
+            self._tickers[ticker]['report_last_run'] = "10/8/2022"
+
             # company_name: (if None)
             # price_last_close: 
             # price_1mo_ago:
@@ -46,16 +54,9 @@ class report:
             # last_earnings:
             # last_earnings_date:
 
-            # report_last_run:
+  
             # Might need a time series for the past 3 months - generate the graph with this data
-
-
-        # Data is written to tickers dict - need to add the key/pair for most itemss
-        # Set the report_last_run var to current timedate
-
-        # Need logic to catch if the lookups failed
-        # Also need some rate limiting since API is restricted to 5 calls/min
-        # Might not need separate calls for all of the above items, the API returns collections of data
+            # Pause for 1 minute since API is restricted to 5 calls/min
 
 
     def generate_docx(self):
@@ -64,13 +65,15 @@ class report:
         # How does the template work?
 
 
-
 if __name__ == '__main__':
 
     #Instantiate the report class
     cr = report()
 
     cr.update()
-    cr.generate_docx()
-    cr.write_snapshot_yaml()
+
+    print(cr)
+
+    # cr.generate_docx()
+    # cr.write_snapshot_yaml()
 

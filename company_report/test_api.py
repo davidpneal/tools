@@ -14,24 +14,67 @@ api_key = '&apikey=alphavantage_api_key'
 symbol = '&symbol=' + ticker
 
 
+# Still need:
+# Price one month ago
+
+
+#############################################################
+
+# Earnings API
+# Most recent quarterly earnings: data['quarterlyEarnings'][0]
+# {'fiscalDateEnding': '2022-06-30', 
+# 'reportedDate': '2022-07-28', 
+# 'reportedEPS': '1.2', 
+# 'estimatedEPS': '1.16', 
+# 'surprise': '0.04', 
+# 'surprisePercentage': '3.4483'}
+
+if True:
+# if False:
+    function = 'function=EARNINGS'
+
+    r = requests.get(base_url + function + symbol + api_key)
+    data = r.json()
+
+    # print(data.keys())
+    # print(data.items())
+    # print(data.values())
+
+    latest_earnings = data['quarterlyEarnings'][0]
+
+    # print(type(qearn))
+
+    print(latest_earnings)
+    # print('\n\n')
+    # for item in qearn:
+    #     print(item)
+
 
 #############################################################
 
 # Company Overview
-# 52 week high\low
-# Dividend date
-# PE, EPS, Revenue, etc
-# Latest quarter closing date
 
-if True:
-# if False:
+# Name: Apple Inc
+# LatestQuarter: 2022-06-30
+# 52WeekHigh: 182.19
+# 52WeekLow: 128.86
+# DividendDate: 2022-08-11
+# PERatio: 24.04
+# EPS: 6.05
+
+# PEGRatio: 2.62
+# DividendPerShare: 0.89
+
+
+# if True:
+if False:
     function = 'function=OVERVIEW'
 
     r = requests.get(base_url + function + symbol + api_key)
     data = r.json()
 
     # print(data)
-    # print(data.keys)
+    # print(data.keys())
 
     for key in data.keys():
         print(key + ": " + data[key])
@@ -91,9 +134,9 @@ if False:
 #############################################################
 
 
-# Data: Timeseries, high, low and volume per 5 min time slice
+# Data: Timeseries, high, low, volume per 5 min time slice
 
-#if True:
+# if True:
 if False:  ## DOES NOT WORK CURRENTLY
     function = 'function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact'
 

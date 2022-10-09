@@ -1,6 +1,6 @@
 
 company_report/tickers.yaml
-**secrets.py
+**secret.py
 !example_secrets.py
 
 **__pycache__
