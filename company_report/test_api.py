@@ -14,10 +14,6 @@ api_key = '&apikey=alphavantage_api_key'
 symbol = '&symbol=' + ticker
 
 
-# Still need:
-# Price one month ago
-
-
 #############################################################
 
 # Earnings API
@@ -29,8 +25,8 @@ symbol = '&symbol=' + ticker
 # 'surprise': '0.04', 
 # 'surprisePercentage': '3.4483'}
 
-if True:
-# if False:
+# if True:
+if False:
     function = 'function=EARNINGS'
 
     r = requests.get(base_url + function + symbol + api_key)
@@ -55,13 +51,13 @@ if True:
 # Company Overview
 
 # Name: Apple Inc
-# LatestQuarter: 2022-06-30
 # 52WeekHigh: 182.19
 # 52WeekLow: 128.86
+
+# LatestQuarter: 2022-06-30
 # DividendDate: 2022-08-11
 # PERatio: 24.04
 # EPS: 6.05
-
 # PEGRatio: 2.62
 # DividendPerShare: 0.89
 
@@ -74,7 +70,7 @@ if False:
     data = r.json()
 
     # print(data)
-    # print(data.keys())
+    print(data.keys())
 
     for key in data.keys():
         print(key + ": " + data[key])
@@ -109,18 +105,9 @@ if False:
     print(list(data.keys()))
     print(data.items())
 
-    #for key in data.keys():
-    key = list(data.keys())[0] # Get the key name of the first (and only) dict entry
-        # print(data[key])
-    
-        #print(data[key].keys())
-        #print(data[key].values())
-
-    # Get the closing price
-    for k2 in data[key]:
-        print(k2)
-        print(data[key][k2])
-        print('\n')
+    # print(data.keys())
+    print("values")
+    print(data.values())
 
 
     index_vals = list(data[key].values()) # Save the dict values into a list
@@ -136,36 +123,52 @@ if False:
 
 # Data: Timeseries, high, low, volume per 5 min time slice
 
-# if True:
-if False:  ## DOES NOT WORK CURRENTLY
-    function = 'function=TIME_SERIES_INTRADAY&interval=5min&outputsize=compact'
+if True:
+# if False:  ## DOES NOT WORK CURRENTLY
+    function = 'function=TIME_SERIES_INTRADAY&interval=15min&outputsize=full'
+
+    # This series only goes back 1-2mo, prob need to switch to extended api
+    # Note that that API is queried 1 month at a time, need 3 calls
+    # Need to set adjusted to true
+
+    # Can probably get the 1mo ago price from here too
 
     r = requests.get(base_url + function + symbol + api_key)
     data = r.json()
 
     # print(data)
-    print(data.keys)
+    print(data.keys())
+    # print(data['Meta Data'])  ### Note -- times are EST
+    # print(data['Time Series (5min)'])
+    # print('\n')
+    # print(data['Time Series (5min)'].values()) # Returns a set of dicts, the keys for these are timestamps
+    # print('\n')
 
-    for key in data.keys():
-        print(key)
-        print(data.keys())
+    series_list = list(data['Time Series (15min)'].values()) #Convert the values of the timeseries (dicts) to a list
     
-        #print(data[key].keys())
-        # print(data[key].values())
+    # print(series_list[0])
+    # print(series_list[0]['4. close'])
 
-        # for k2 in data[key]:
-        #     print(k2)
-        #     print(data[key][k2])
-        #     print('\n')
+    price_series = [val['4. close'] for val in series_list] # Extract the closing price from each data point
+    print(len(price_series))
 
+    # for key in data.keys():
+    #     print(key)
+    #     print(data.keys())
+    
 
-        # Testing, NOTE - currently, need to rename secrets.py because it causes a library to not load
-        import matplotlib.pyplot as plt
+    # Testing, NOTE - currently, need to rename secrets.py because it causes a library to not load
+    import matplotlib.pyplot as plt
 
-        #data, meta_data = ts.get_intraday(symbol='MSFT',interval='1min', outputsize='full')
-        data.keys()['4. close'].plot()
-        plt.title('Intraday Times Series for the MSFT stock (1 min)')
-        plt.show()
+    # price_series.plot() ## Plot needs more data -- what inputs can this task?
+    plt.plot(price_series)
+    #plt.title('Intraday Times Series (5 min)')
+    plt.show()
+
+    # import matplotlib.pyplot as plt
+    # plt.plot([1, 2, 3, 4])
+    # plt.ylabel('some numbers')
+    # plt.show()
 
 
 #############################################################
